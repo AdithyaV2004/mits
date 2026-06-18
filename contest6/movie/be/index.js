@@ -144,6 +144,16 @@ app.post('/signup', (req, res)=>{
     }
     db.users.push(user);
 
+    db.summary.push({
+        userId:count,
+        username:rData.username,
+        totalBookings:0,
+        totalAmountSpent:0,
+        confirmedBookings:0,
+        cancelledBookings:0,
+        totalSeatsBooked:0
+    })
+
     res.json({
         success:true,
         message:"User created successfully",
@@ -285,6 +295,12 @@ app.post('/bookings/:userid', (req, res)=>{
         status:"Active"
     })
 
+    const udata=db.summary.find(x=>x.userId==userId);
+    udata.totalBookings+=1;
+    udata.totalAmountSpent+=totalAmount
+    udata.confirmedBookings+=1;
+    udata.totalSeatsBooked+=seats;
+
     show.availableSeats-=seats;
     res.json({
         success:true,
@@ -396,9 +412,15 @@ app.put('/bookings/:userId/:bookingId', (req, res)=>{
         });
     }
 
+    const udata=db.summary.find(x=>x.userId==userId);
+    udata.totalAmountSpent-=specific.totAmt;
+
     show.availableSeats-=(nseats-specific.seats);
     specific.totAmt=nseats*show.pricePerSeat;
     specific.seats=nseats;
+
+    udata.totalAmountSpent+=specific.totAmt
+    udata.totalSeatsBooked+=(nseats-specific.seats);
     
     res.json({
         success:true,
@@ -434,10 +456,17 @@ app.delete('/bookings/:userId/:bookingId', (req ,res)=>{
         });
     }
 
+    const udata=db.summary.find(x=>x.userId==userID);
+    udata.totalSeatsBooked-=specific.seats;
     show.availableSeats+=specific.seats;
     specific.seats=0;
     specific.status="Cancelled";
-    specific.Invoice=specific.Invoice/2;
+    specific.totAmt=specific.totAmt/2;
+
+    udata.totalAmountSpent-=specific.totAmt;
+    udata.confirmedBookings-=1;
+    udata.cancelledBookings+=1;
+
 
     res.json({
         success:true,
@@ -445,6 +474,21 @@ app.delete('/bookings/:userId/:bookingId', (req ,res)=>{
     })
 })
 
+app.get('/summary/:userId', (req, res)=>{
+    const userID=req.params.userId;
+    const udata=db.summary.find(x=>x.userId==userID);
 
+    if(!udata){
+        return res.status(401).json({
+            success:false,
+            message:"Could not find summary"
+        })
+    }
+
+    res.json({
+        success:true,
+        data:udata
+    })
+})
 
 app.listen(3000);
