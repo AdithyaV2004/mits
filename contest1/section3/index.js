@@ -9,9 +9,7 @@ Q1Create a file users.json.
 // em='';
 // fs.readFile("users.json", "utf-8", (err, data)=>{
 //     const users=JSON.parse(data);
-//     for(let i=0;i<users.length;i++){
-//         em+=users[i].email+'\n';
-//     }
+//     let em = users.map(user=>user.email).join("\n")   //Important
 //     fs.writeFile("mail.txt", em, "utf-8", (err)=>{
 //         if(err){
 //             console.log(err);
@@ -49,28 +47,38 @@ Q2 - Read the file.
 //     });
 // })
 
-/*Create `events.txt`.
-### Task
-- Read the events.
-- Count occurrences of each event.
-- Write a summary into `analytics.txt`.
-*/
-mess={}
-let data=fs.readFile("events.txt", "utf-8", (err, data)=>{
-    data=data.split("\r\n");
-    for (let i=0;i<data.length;i++){
-        const ev=data[i];
-        if(ev in mess){
-            mess[ev]+=1;
-        }
-        else{
-            mess[ev]=0;
-        }
-    }
-    fs.writeFile("analytics.txt", mess, "utf-8", (err)=>{
-        if(err){
-            console.log("error");
-        }
-    })
-})
+// /*Create `events.txt`.
+// ### Task
+// - Read the events.
+// - Count occurrences of each event.
+// - Write a summary into `analytics.txt`.
+// */
+// mess={}
+// fs.readFile("events.txt", "utf-8", (err, data)=>{
+//     data=data.split("\r\n")
+//     for(let i=0;i<data.length;i++){
+//         if(!(data[i] in mess)){
+//             mess[data[i]]=0;
+//         }
+//         mess[data[i]]+=1;
+//     }
+//     let str=""
+//     for(let i of Object.keys(mess)){
+//         str+=`${i}: ${mess[i]}\n`
+//     }
+//     fs.writeFile("analytics.txt", str, "utf-8", (err)=>{
+//         if(err){
+//             console.log("Not Success")
+//         }else{
+//             console.log("Succ")
+//         }
+//     })
+// })
+
+
+
+
+
+//Q5  
+
 
