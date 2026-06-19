@@ -10,7 +10,6 @@ app.use(express.json());
 function auth(req, res, next){
     const token=req.headers.token;
     const decoded=jwt.verify(token, JWT_SECRET);
-    //Todo token verification is stil fked up
     if(decoded.email){
         next();
     }else{
@@ -19,6 +18,27 @@ function auth(req, res, next){
             message:"You are not signed in"
         })
     }
+
+    //Replace above auth with below commented auth for proper function of auth. Don't do when testing
+
+    // const token=req.headers.token;
+    // if(!token){
+    //     return res.status(401).json({
+    //         success:false,
+    //         message:"No Valid Token"
+    //     })
+    // }
+    // const decoded=jwt.verify(token, JWT_SECRET);
+    // const user=db.users.find(x=>x.email==decoded.email);
+    // //Todo token verification is stil fked up
+    // if(!user || user.token!==token){
+    //     return res.status(401).json({
+    //         success:false,
+    //         message:"You are not signed in"
+    //     })  
+    // }else{
+    //     next();
+    // }
 }
 
 const db = {
