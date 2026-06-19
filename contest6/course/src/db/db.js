@@ -1,0 +1,23 @@
+const courses = [
+    {
+    id: "course_1",
+    title: "Node.js Basics",
+    description: "Learn Node.js",
+    price: 499,
+    createdBy: "admin_1"
+  },
+  {
+    id: "course_2",
+    title: "Coding Harness",
+    description: "Learn Agentic AI",
+    price: 799,
+    createdBy: "admin_1"
+  }
+];
+
+const users = [];
+
+module.exports= {
+    users:users, 
+    courses:courses
+};
