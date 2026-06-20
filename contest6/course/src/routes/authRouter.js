@@ -11,7 +11,7 @@ function auth(req, res, next){
     const user=users.find(x=>{
         return x.username==username
     });
-    if(!username){    //if to include real jwt auth, replace username with !user
+    if(!username){    //for legit jwt auth, replace username with !user
         return res.status(401).json({
             success:false,
             message:"User not found"

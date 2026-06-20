@@ -44,7 +44,7 @@ function signUpController(req, res){
         password:user.password,
         role:user.role,
         wallet:0,
-        purchasedCourses:[],
+        purchasedCourses:(user.role=='user'?[]:null),
         token:token
     });
 

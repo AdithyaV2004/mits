@@ -15,7 +15,17 @@ const courses = [
   }
 ];
 
-const users = [];
+const users = [
+  {
+    id: "user_1",
+    username: "rahul",
+    password: "123456",
+    role: "user",
+    wallet: 0,
+    purchasedCourses: [],
+    token: null
+  }
+];
 
 module.exports= {
     users:users, 

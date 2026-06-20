@@ -7,7 +7,7 @@ function purchaseController(req,res){
     if (user.role!='user'){
         return res.statsu(401).json({
             success:false,
-            message:"Not authorised"
+            message:"Not Authorised"
         })
     }
 

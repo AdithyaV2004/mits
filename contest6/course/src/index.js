@@ -6,6 +6,7 @@ const {users, courses}=require('./db/db.js');
 const userRouter=require('./routes/userRoutes.js')
 const walletRouter=require('./routes/walletRoutes.js')
 const profileRouter=require('./routes/profileRouter.js')
+const adminRouter=require('./routes/adminRoutes.js')
 
 const app=express();
 
@@ -15,7 +16,7 @@ app.use('/users', userRouter);  //user signup and signin
 
 app.use('/wallet', walletRouter);  //user wallet add money route
 
-
+app.use('/admin', adminRouter);
 
 
 
